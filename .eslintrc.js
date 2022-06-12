@@ -46,6 +46,7 @@ module.exports = {
   settings: {
     'import/ignore': ['node_modules/react-native/index\\.js$']
   },
+
   env: {
     browser: true,
     amd: true,
