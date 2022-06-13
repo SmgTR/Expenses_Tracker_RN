@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": ["dom", "esnext"],
-    "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "types": ["jest", "node"],
@@ -14,14 +13,16 @@
     "strictPropertyInitialization": true,
     "strictFunctionTypes": true,
     "skipLibCheck": true,
+    "strict": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./*"]
     },
     "jsx": "react-jsx"
   },
-  "exclude": ["node_modules"],
-  "extends": "expo/tsconfig.base"
+  "exclude": ["node_modules"]
+  // "extends": "expo/tsconfig.base"
 }
