@@ -1,8 +1,8 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  preset: 'react-native',
-  setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js'],
+  preset: 'jest-expo',
+  setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js', './setupTest.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transformIgnorePatterns: ['node_modules/(?!react-native|react-navigation)/']
 };
