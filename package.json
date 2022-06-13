@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "cd ./client && yarn test --watchAll=false",
     "prepare": "husky install",
     "backend": "cd ./backend && yarn start:dev",
     "frontend": "cd ./client && yarn start",
