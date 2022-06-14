@@ -19,6 +19,6 @@ describe('Calculate and display info from expenses list', () => {
 
   test('Calculate amount of expenses', () => {
     const summary = wrapper.getByTestId('expenses-summary');
-    expect(summary.children[0]).toBe('99.28');
+    expect(summary.children.join('')).toBe('$ 99.28');
   });
 });

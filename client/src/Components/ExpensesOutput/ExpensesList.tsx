@@ -1,10 +1,11 @@
-import { expensesItem } from '@/src/types';
+import { expensesItem } from '@/types';
 import { FC } from 'react';
 
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
+import ExpensesItem from './ExpensesItem';
 
-function renderExpenseItem(itemData: any) {
-  return <Text>{itemData.item.description}</Text>;
+function renderExpenseItem({ item }: { item: expensesItem }) {
+  return <ExpensesItem {...item} />;
 }
 
 const ExpensesList: FC<{ expenses: expensesItem[] }> = ({ expenses }) => {
