@@ -33,7 +33,10 @@ function ExpensesOverview() {
         component={AllExpenses}
         options={{
           title: 'All Expenses',
-          tabBarLabel: 'All'
+          tabBarLabel: 'All',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar-outline" size={size} color={color} />
+          )
         }}
       />
     </BottomTabs.Navigator>
