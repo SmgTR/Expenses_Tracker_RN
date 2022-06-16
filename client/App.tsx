@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { navigationRef } from '@/utils/routes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AllExpenses, ManageExpenses, RecentExpenses } from './src/Screens';
 import { GlobalStyles } from './src/Constants/styles';
 import { Ionicons } from '@expo/vector-icons';
+import IconButton from '@/Components/UI/IconButton';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -12,12 +14,20 @@ const BottomTabs = createBottomTabNavigator();
 function ExpensesOverview() {
   return (
     <BottomTabs.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-        tabBarActiveTintColor: GlobalStyles.colors.accent500
-      }}
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => navigation.navigate('ManageExpense')}
+          />
+        )
+      })}
     >
       <BottomTabs.Screen
         name="RecentExpenses"
@@ -47,14 +57,18 @@ function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
           <Stack.Screen
             name="ExpensesOverview"
             component={ExpensesOverview}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="ManageExpenses" component={ManageExpenses} />
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpenses}
+            options={{ title: 'Manage Expense' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
