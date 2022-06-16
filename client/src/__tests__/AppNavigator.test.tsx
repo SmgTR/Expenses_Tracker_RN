@@ -30,4 +30,11 @@ describe('App navigation', () => {
     const recentScreen = await wrapper.findByText('Recent Expenses');
     expect(recentScreen).toBeTruthy();
   });
+
+  test('List item go to Manage Screen on press', async () => {
+    const listItem = await wrapper.findByText('A pair of shoes');
+    fireEvent(listItem, 'press');
+    const manageScreen = await wrapper.findByText('ManageExpenses');
+    expect(manageScreen).toBeTruthy();
+  });
 });

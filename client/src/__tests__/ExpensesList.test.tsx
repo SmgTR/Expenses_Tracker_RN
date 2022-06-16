@@ -1,4 +1,5 @@
-import { render, RenderAPI } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { fireEvent, render, RenderAPI } from '@testing-library/react-native';
 import ExpensesList from '../Components/ExpensesOutput/ExpensesList';
 
 const expenses = [
@@ -8,8 +9,13 @@ const expenses = [
 
 describe('Get and display list of expenses', () => {
   let wrapper: RenderAPI;
+
   beforeEach(() => {
-    wrapper = render(<ExpensesList expenses={expenses} />);
+    wrapper = render(
+      <NavigationContainer>
+        <ExpensesList expenses={expenses} />
+      </NavigationContainer>
+    );
   });
 
   test('Check if item is displayed', () => {
