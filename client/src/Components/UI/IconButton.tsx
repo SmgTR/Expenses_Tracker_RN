@@ -11,7 +11,11 @@ interface iconButton {
 
 const IconButton: FC<iconButton> = ({ icon, size, color, onPress }) => {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => pressed && styles.pressed}
+      testID="iconButton"
+    >
       <View style={styles.buttonContainer}>
         <Ionicons name={icon} size={size} color={color} />
       </View>
