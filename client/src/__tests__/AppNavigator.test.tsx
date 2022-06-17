@@ -31,10 +31,17 @@ describe('App navigation', () => {
     expect(recentScreen).toBeTruthy();
   });
 
-  test('List item go to Manage Screen on press', async () => {
+  test('List item go to Manage Screen edit mode on press', async () => {
     const listItem = await wrapper.findByText('A pair of shoes');
     fireEvent(listItem, 'press');
-    const manageScreen = await wrapper.findByText('ManageExpenses');
-    expect(manageScreen).toBeTruthy();
+    const editScreen = await wrapper.findByText(/update/i);
+    expect(editScreen).toBeTruthy();
+  });
+
+  test('Plus icon on press go to Manage Screen add mode', async () => {
+    const addIcon = await wrapper.findByTestId('iconButton');
+    fireEvent(addIcon, 'press');
+    const addScreen = await wrapper.findByText('Add');
+    expect(addScreen).toBeTruthy();
   });
 });
