@@ -1,4 +1,4 @@
-import { AppRootParamList } from 'navigation';
+import { AppRootParamList } from 'types/navigation';
 import { FC, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';

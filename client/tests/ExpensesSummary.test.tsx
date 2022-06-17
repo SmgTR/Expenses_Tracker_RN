@@ -1,5 +1,5 @@
 import { render, RenderAPI } from '@testing-library/react-native';
-import ExpensesSummary from '../Components/ExpensesOutput/ExpensesSummary';
+import ExpensesSummary from '../src/Components/ExpensesOutput/ExpensesSummary';
 
 describe('Calculate and display info from expenses list', () => {
   const expenses = [

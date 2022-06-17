@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { fireEvent, render, RenderAPI } from '@testing-library/react-native';
-import ExpensesList from '../Components/ExpensesOutput/ExpensesList';
+import { render, RenderAPI } from '@testing-library/react-native';
+import ExpensesList from '../src/Components/ExpensesOutput/ExpensesList';
 
 const expenses = [
   { id: 'e1', description: 'A pair of shoes', amount: 59.992121, date: new Date('2021-12-19') },

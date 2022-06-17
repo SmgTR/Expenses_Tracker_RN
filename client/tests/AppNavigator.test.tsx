@@ -1,5 +1,5 @@
 import { render, fireEvent, RenderAPI } from '@testing-library/react-native';
-import App from '../../App';
+import App from '../App';
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 

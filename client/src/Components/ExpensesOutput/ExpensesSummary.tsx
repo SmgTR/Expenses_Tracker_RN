@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { FC } from 'react';
 
-import { expensesItem } from '@/types';
+import { Expense } from '@/types/Expense';
 
 import { GlobalStyles } from '@/Constants/styles';
 
-const ExpensesSummary: FC<{ periodName: String; expenses: expensesItem[] }> = ({
+const ExpensesSummary: FC<{ periodName: String; expenses: Expense[] }> = ({
   periodName,
   expenses
 }) => {

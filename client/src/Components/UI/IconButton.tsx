@@ -2,14 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { FC } from 'react';
 import { Pressable, View, GestureResponderEvent, StyleSheet } from 'react-native';
 
-interface iconButton {
+interface IconButton {
   icon: keyof typeof Ionicons.glyphMap;
   size: number;
   color: string | undefined;
   onPress: (event: GestureResponderEvent) => void;
 }
 
-const IconButton: FC<iconButton> = ({ icon, size, color, onPress }) => {
+const IconButton: FC<IconButton> = ({ icon, size, color, onPress }) => {
   return (
     <Pressable
       onPress={onPress}
