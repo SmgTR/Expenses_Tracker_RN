@@ -58,7 +58,14 @@ function App() {
     <>
       <StatusBar style="auto" />
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: GlobalStyles.colors.primary500
+            },
+            headerTintColor: 'white'
+          }}
+        >
           <Stack.Screen
             name="ExpensesOverview"
             component={ExpensesOverview}
@@ -67,7 +74,7 @@ function App() {
           <Stack.Screen
             name="ManageExpense"
             component={ManageExpenses}
-            options={{ title: 'Manage Expense' }}
+            options={{ presentation: 'modal' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
