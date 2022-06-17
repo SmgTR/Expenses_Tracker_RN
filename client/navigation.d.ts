@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 export type AppRootParamList = {
-  ManageExpense: undefined;
+  ManageExpense: { expenseId: string };
 };
 
 // This registers which makes navigation fully type-safe.
@@ -10,3 +10,4 @@ declare global {
     interface RootParamList extends AppRootParamList {}
   }
 }
+import type { RouteProp } from '@react-navigation/native';
