@@ -6,10 +6,10 @@ import { expensesItem } from '@/types';
 import { getFormattedDate } from '@/utils/date';
 import { navigationRef } from '@/utils/routes';
 
-const ExpensesItem: FC<expensesItem> = ({ description, amount, date }) => {
+const ExpensesItem: FC<expensesItem> = ({ id, description, amount, date }) => {
   const navigation = useNavigation();
   function expensePressHandler() {
-    if (navigationRef.isReady()) navigation.navigate('ManageExpense');
+    if (navigationRef.isReady()) navigation.navigate('ManageExpense', { expenseId: id });
   }
 
   return (
