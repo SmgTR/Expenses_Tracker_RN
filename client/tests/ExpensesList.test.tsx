@@ -3,8 +3,8 @@ import { render, RenderAPI } from '@testing-library/react-native';
 import ExpensesList from '../src/Components/ExpensesOutput/ExpensesList';
 
 const expenses = [
-  { id: 'e1', description: 'A pair of shoes', amount: 59.992121, date: new Date('2021-12-19') },
-  { id: 'e2', description: 'Bananas', amount: 39.29, date: new Date('2022-06-08') }
+  { id: 'e1', description: 'A pair of shoes', amount: 59.992121, date: '2021-12-19' },
+  { id: 'e2', description: 'Bananas', amount: 39.29, date: '2022-06-08' }
 ];
 
 describe('Get and display list of expenses', () => {
