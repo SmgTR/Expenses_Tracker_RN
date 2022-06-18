@@ -1,6 +1,6 @@
 import { getDateMinusDays, getFormattedDate } from '@/utils/date';
 
-test('Tranform date to yyyy-mm-dd form', () => {
+test('Transform date to yyyy-mm-dd form', () => {
   const date = new Date(1655531070000);
   const dateOutput = getFormattedDate(date);
   expect(dateOutput).toBe('2022-06-18');
