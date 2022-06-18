@@ -3,6 +3,7 @@ import App from '../App';
 import { Provider } from 'react-redux';
 
 import { store } from '../src/redux/store';
+import { getFormattedDate } from '@/utils/date';
 
 describe('App navigation and list actions', () => {
   let wrapper: RenderAPI;
@@ -16,15 +17,13 @@ describe('App navigation and list actions', () => {
   });
 
   test('Start on recent tab', async () => {
-    const recentScreen = await wrapper.findByText('Recent Expenses');
-    expect(recentScreen).toBeTruthy();
+    await wrapper.findByText('Recent Expenses');
   });
 
   test('Switch to all expenses tab', async () => {
     const navButton = await wrapper.findByText('All');
     fireEvent(navButton, 'press');
-    const newScreen = await wrapper.findByText('All Expenses');
-    expect(newScreen).toBeTruthy();
+    await wrapper.findByText('All Expenses');
   });
 
   test('Switch back to recent tab', async () => {
@@ -32,47 +31,68 @@ describe('App navigation and list actions', () => {
     fireEvent(allButton, 'press');
     const recentButton = await wrapper.findByText('Recent');
     fireEvent(recentButton, 'press');
-    const recentScreen = await wrapper.findByText('Recent Expenses');
-    expect(recentScreen).toBeTruthy();
+    await wrapper.findByText('Recent Expenses');
   });
-
+  //Current: Recent Tab
   test('Plus icon on press go to Manage Screen add mode', async () => {
     const addIcon = await wrapper.findByTestId('addButton');
     fireEvent(addIcon, 'press');
-    const addScreen = await wrapper.findByText('Add');
-    expect(addScreen).toBeTruthy();
+    await wrapper.findByText('Add');
   });
 
   test('Add list item', async () => {
     const addIcon = await wrapper.findByTestId(/addButton/i);
     fireEvent(addIcon, 'press');
+
+    const descriptionInput = await wrapper.getByTestId('formDescription');
+    const dateInput = await wrapper.getByTestId('formDate');
+    const amountInput = await wrapper.getByTestId('formAmount');
+
+    const date = getFormattedDate(new Date());
+
+    fireEvent(descriptionInput, 'changeText', 'motorhead cd');
+    fireEvent(dateInput, 'changeText', date);
+    fireEvent(amountInput, 'changeText', '22');
+
     const addButton = await wrapper.findByText(/add/i);
-    fireEvent(addButton, 'press');
-    const listItem = await wrapper.findByText(/motorhead/i);
-    expect(listItem).toBeTruthy();
+    await fireEvent(addButton, 'press');
+
+    await wrapper.findByText(/motorhead cd/i);
+    await wrapper.findByText(date.toString());
+    await wrapper.findByText('22.00');
   });
 
   test('Display update screen', async () => {
-    const listItem = await wrapper.findByText(/motorhead/i);
+    const listItem = await wrapper.findByText(/motorhead cd/i);
     fireEvent(listItem, 'press');
-    const editScreen = await wrapper.findByText(/update/i);
-    expect(editScreen).toBeTruthy();
+
+    await wrapper.findByText(/update/i);
   });
 
   test('Update list item', async () => {
-    const listItem = await wrapper.findByText(/motorhead/i);
+    const listItem = await wrapper.findByText(/motorhead cd/i);
     fireEvent(listItem, 'press');
+
+    const descriptionInput = await wrapper.getByTestId('formDescription');
+    const dateInput = await wrapper.getByTestId('formDate');
+    const amountInput = await wrapper.getByTestId('formAmount');
+
+    const date = getFormattedDate(new Date());
+
+    fireEvent(descriptionInput, 'changeText', 'guns n roses cd');
+    fireEvent(dateInput, 'changeText', date);
+    fireEvent(amountInput, 'changeText', '22');
+
     const editButton = await wrapper.findByText(/update/i);
     fireEvent(editButton, 'press');
-    const updatedItem = await wrapper.findByText(/appetite for destruction/i);
-    expect(updatedItem).toBeTruthy();
+    await wrapper.findByText(/guns n roses cd/i);
   });
 
   test('Delete list item', async () => {
-    const listItem = await wrapper.findByText(/appetite for destruction/i);
+    const listItem = await wrapper.findByText(/guns n roses cd/i);
     fireEvent(listItem, 'press');
     const deleteButton = await wrapper.findByTestId('deleteButton');
     fireEvent(deleteButton, 'press');
-    expect(wrapper.queryByText(/appetite for destruction/i)).not.toBeTruthy();
+    expect(wrapper.queryByText(/guns n roses cd/i)).not.toBeTruthy();
   });
 });
