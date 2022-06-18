@@ -1,23 +1,23 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { FC } from 'react';
 
-import { Expense } from '@/types/Expense';
-
 import { GlobalStyles } from '@/Constants/styles';
+import { ExpensesSummaryComponent } from '@/types/ExpensesComponents';
 
-const ExpensesSummary: FC<{ periodName: String; expenses: Expense[] }> = ({
-  periodName,
-  expenses
-}) => {
-  const expensesSum = expenses.reduce((sum, expense) => {
+const ExpensesSummary: FC<ExpensesSummaryComponent> = ({ periodName, expenses }) => {
+  const expensesSum = expenses?.reduce((sum, expense) => {
     return sum + expense.amount;
   }, 0);
 
   return (
     <View style={styles.container}>
       <Text style={styles.period}>{periodName}</Text>
-      <Text testID="expenses-summary" style={styles.sum}>
-        $ {expensesSum.toFixed(2)}
+      <Text style={styles.sum}>
+        {expensesSum && (
+          <Text testID="expenses-summary" style={styles.sum}>
+            $ {expensesSum.toFixed(2)}
+          </Text>
+        )}
       </Text>
     </View>
   );
