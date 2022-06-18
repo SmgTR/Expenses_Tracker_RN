@@ -28,6 +28,7 @@ function ExpensesOverview() {
             size={24}
             color={tintColor}
             onPress={() => navigation.navigate('ManageExpense')}
+            testID="addButton"
           />
         )
       })}
