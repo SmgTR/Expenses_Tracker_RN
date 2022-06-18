@@ -59,7 +59,7 @@ function ExpensesOverview() {
 function App() {
   return (
     <Provider store={store}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator
           screenOptions={{
