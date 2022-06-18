@@ -14,3 +14,9 @@ export interface ExpensesSummaryComponent {
   periodName: String;
   expenses: Expense[];
 }
+
+export interface ExpensesFormType {
+  onCancel: Function;
+  onSubmit: Function;
+  submitButtonLabel: string;
+}

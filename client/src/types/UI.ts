@@ -3,13 +3,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 export interface InputType {
   label: string;
-  textInputConfig: TextInputProps;
+  textInputConfig?: TextInputProps;
+  style?: {};
+  testID?: string;
 }
 
 export interface ButtonType {
   mode?: string;
   style?: Object;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: Function | ((event: GestureResponderEvent) => void);
 }
 
 export interface IconButtonType {

@@ -4,3 +4,9 @@ export interface Expense {
   amount: number;
   date: string;
 }
+
+export interface ExpenseInputsType {
+  description: string;
+  amount: number;
+  date: string;
+}
