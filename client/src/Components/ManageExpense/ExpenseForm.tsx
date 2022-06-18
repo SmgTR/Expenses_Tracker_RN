@@ -4,11 +4,16 @@ import { FC, useState } from 'react';
 import { Button } from '@/Components';
 import { ExpensesFormType } from '@/types';
 
-const ExpenseForm: FC<ExpensesFormType> = ({ onCancel, onSubmit, submitButtonLabel }) => {
+const ExpenseForm: FC<ExpensesFormType> = ({
+  onCancel,
+  onSubmit,
+  submitButtonLabel,
+  defaultValues
+}) => {
   const [inputValues, setInputValues] = useState({
-    amount: '',
-    description: '',
-    date: ''
+    amount: defaultValues ? defaultValues.amount.toString() : '',
+    description: defaultValues ? defaultValues.description : '',
+    date: defaultValues ? defaultValues.date : ''
   });
 
   const inputChangeHandler = (value: string, key: string) => {

@@ -19,4 +19,5 @@ export interface ExpensesFormType {
   onCancel: Function;
   onSubmit: Function;
   submitButtonLabel: string;
+  defaultValues?: Expense;
 }

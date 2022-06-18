@@ -7,7 +7,7 @@ import IconButton from '@/Components/UI/IconButton';
 import { GlobalStyles } from '@/Constants/styles';
 import ExpenseForm from '@/Components/ManageExpense/ExpenseForm';
 
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addExpense, deleteExpense, updateExpense } from '@/redux/slices/expenses-slice';
 
 import { ExpenseInputsType } from '@/types';
@@ -19,6 +19,10 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   const isEditing = !!editedExpenseId;
 
   const dispatch = useAppDispatch();
+
+  const [selectedExpense] = useAppSelector((state) => state.expenses).filter(
+    (expense) => expense.id === route?.params?.expenseId
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -60,6 +64,7 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
         onCancel={cancelHandler}
         submitButtonLabel={isEditing ? 'Update' : 'Add'}
         onSubmit={confirmHandler}
+        defaultValues={selectedExpense}
       />
 
       {isEditing && (
