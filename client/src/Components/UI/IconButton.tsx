@@ -7,15 +7,12 @@ interface IconButton {
   size: number;
   color: string | undefined;
   onPress: (event: GestureResponderEvent) => void;
+  testID?: string;
 }
 
-const IconButton: FC<IconButton> = ({ icon, size, color, onPress }) => {
+const IconButton: FC<IconButton> = ({ icon, size, color, onPress, testID }) => {
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => pressed && styles.pressed}
-      testID="iconButton"
-    >
+    <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed} testID={testID}>
       <View style={styles.buttonContainer}>
         <Ionicons name={icon} size={size} color={color} />
       </View>
