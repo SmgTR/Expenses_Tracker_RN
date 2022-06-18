@@ -1,16 +1,20 @@
 import { AppRootParamList } from 'types/navigation';
 import { FC, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import IconButton from '@/Components/UI/IconButton';
 import { GlobalStyles } from '@/Constants/styles';
 import Button from '@/Components/UI/Button';
+import { useAppDispatch } from '@/redux/hooks';
+import { addExpense, deleteExpense, updateExpense } from '@/redux/slices/expenses-slice';
 
 type Props = NativeStackScreenProps<AppRootParamList, 'ManageExpense'>;
 
 const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   const editedExpenseId = route?.params;
   const isEditing = !!editedExpenseId;
+
+  const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -19,6 +23,7 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
+    dispatch(deleteExpense(editedExpenseId));
     navigation.goBack();
   };
 
@@ -27,6 +32,27 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   };
 
   const confirmHandler = () => {
+    if (isEditing) {
+      dispatch(
+        updateExpense({
+          id: editedExpenseId.expenseId,
+          expenseChanges: {
+            description: 'Appetite for Destruction',
+            amount: 24.99,
+            date: '2022-06-12'
+          }
+        })
+      );
+    } else {
+      dispatch(
+        addExpense({
+          id: Math.random(),
+          description: 'Motorhead',
+          amount: 19.99,
+          date: new Date().toString()
+        })
+      );
+    }
     navigation.goBack();
   };
 
@@ -47,6 +73,7 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
             color={GlobalStyles.colors.error500}
             size={36}
             onPress={deleteExpenseHandler}
+            testID="deleteButton"
           />
         </View>
       )}
