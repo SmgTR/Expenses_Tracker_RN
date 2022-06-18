@@ -1,16 +1,9 @@
+import { IconButtonType } from '@/types/UI';
 import { Ionicons } from '@expo/vector-icons';
 import { FC } from 'react';
-import { Pressable, View, GestureResponderEvent, StyleSheet } from 'react-native';
+import { Pressable, View, StyleSheet } from 'react-native';
 
-interface IconButton {
-  icon: keyof typeof Ionicons.glyphMap;
-  size: number;
-  color: string | undefined;
-  onPress: (event: GestureResponderEvent) => void;
-  testID?: string;
-}
-
-const IconButton: FC<IconButton> = ({ icon, size, color, onPress, testID }) => {
+const IconButton: FC<IconButtonType> = ({ icon, size, color, onPress, testID }) => {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed} testID={testID}>
       <View style={styles.buttonContainer}>

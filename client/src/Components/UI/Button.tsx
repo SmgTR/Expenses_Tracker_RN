@@ -1,14 +1,9 @@
 import { GlobalStyles } from '@/Constants/styles';
+import { ButtonType } from '@/types/UI';
 import { FC } from 'react';
-import { View, Text, Pressable, GestureResponderEvent, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 
-interface Button {
-  mode?: string;
-  style?: Object;
-  onPress: (event: GestureResponderEvent) => void;
-}
-
-const Button: FC<Button> = ({ children, mode, style, onPress }) => {
+const Button: FC<ButtonType> = ({ children, mode, style, onPress }) => {
   return (
     <View style={style}>
       <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
