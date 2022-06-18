@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FC } from 'react';
 import { GlobalStyles } from '@/Constants/styles';
-import { Expense } from '@/types/Expense';
+import { Expense } from '@/types';
 import { getFormattedDate } from '@/utils/date';
 import { navigationRef } from '@/utils/routes';
 

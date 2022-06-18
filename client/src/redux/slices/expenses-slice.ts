@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Expense } from '@/types/Expense';
+import { Expense } from '@/types';
 
 const DUMMY_EXPENSES: Expense[] = [
   { id: 'e1', description: 'A pair of shoes', amount: 59.99, date: 'Sat Jun 18 2022' },

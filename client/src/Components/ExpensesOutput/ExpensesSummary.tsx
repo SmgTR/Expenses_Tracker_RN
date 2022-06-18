@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { FC } from 'react';
 
 import { GlobalStyles } from '@/Constants/styles';
-import { ExpensesSummaryComponent } from '@/types/ExpensesComponents';
+import { ExpensesSummaryComponent } from '@/types';
 
 const ExpensesSummary: FC<ExpensesSummaryComponent> = ({ periodName, expenses }) => {
   const expensesSum = expenses?.reduce((sum, expense) => {

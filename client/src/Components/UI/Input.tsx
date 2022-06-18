@@ -1,7 +1,7 @@
-import { View, Text, TextInputProps } from 'react-native';
+import { View, Text } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { FC } from 'react';
-import { InputType } from '@/types/UI';
+import { InputType } from '@/types';
 
 const Input: FC<InputType> = ({ label, textInputConfig }) => {
   return (

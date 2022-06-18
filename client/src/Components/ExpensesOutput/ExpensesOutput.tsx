@@ -4,7 +4,7 @@ import ExpensesSummary from './ExpensesSummary';
 import { FC } from 'react';
 
 import { GlobalStyles } from '@/Constants/styles';
-import { ExpensesOutputComponent } from '@/types/ExpensesComponents';
+import { ExpensesOutputComponent } from '@/types';
 
 const ExpensesOutput: FC<ExpensesOutputComponent> = ({
   expensesPeriod,

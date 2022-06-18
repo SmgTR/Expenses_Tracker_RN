@@ -1,5 +1,4 @@
-import { Expense } from '@/types/Expense';
-import { ExpensesListComponent } from '@/types/ExpensesComponents';
+import { Expense, ExpensesListComponent } from '@/types';
 import { FC } from 'react';
 
 import { FlatList } from 'react-native';
