@@ -1,21 +1,26 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import ExpensesList from './ExpensesList';
 import ExpensesSummary from './ExpensesSummary';
 import { FC } from 'react';
 
-import { Expense } from '@/types/Expense';
 import { GlobalStyles } from '@/Constants/styles';
+import { ExpensesOutputComponent } from '@/types/ExpensesComponents';
 
-import { useAppSelector } from '@/redux/hooks';
+const ExpensesOutput: FC<ExpensesOutputComponent> = ({
+  expensesPeriod,
+  expensesList,
+  fallbackText
+}) => {
+  let content = <Text style={styles.infoText}>{fallbackText}</Text>;
 
-//  FC<> = ({ expenses: expensesItem, expensesPeriod })
-const ExpensesOutput: FC<{ expensesPeriod: string }> = ({ expensesPeriod }) => {
-  const allExpenses = useAppSelector((state) => state.expenses.expenses);
+  if (expensesList.length > 0) {
+    content = <ExpensesList expenses={expensesList} />;
+  }
 
   return (
     <View style={styles.container}>
-      <ExpensesSummary expenses={allExpenses} periodName={expensesPeriod} />
-      <ExpensesList expenses={allExpenses} />
+      <ExpensesSummary expenses={expensesList} periodName={expensesPeriod} />
+      {content}
     </View>
   );
 };
@@ -27,6 +32,12 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
     flex: 1
+  },
+  infoText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 32
   }
 });
 
