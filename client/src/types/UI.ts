@@ -6,6 +6,7 @@ export interface InputType {
   textInputConfig?: TextInputProps;
   style?: {};
   testID?: string;
+  invalid: boolean;
 }
 
 export interface ButtonType {
