@@ -1,6 +1,6 @@
 import { AppRootParamList } from 'types/navigation';
 import { FC, useLayoutEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable, Keyboard } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import IconButton from '@/Components/UI/IconButton';
@@ -59,26 +59,28 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ExpenseForm
-        onCancel={cancelHandler}
-        submitButtonLabel={isEditing ? 'Update' : 'Add'}
-        onSubmit={confirmHandler}
-        defaultValues={selectedExpense}
-      />
+    <Pressable onPress={Keyboard.dismiss} style={styles.container}>
+      <View>
+        <ExpenseForm
+          onCancel={cancelHandler}
+          submitButtonLabel={isEditing ? 'Update' : 'Add'}
+          onSubmit={confirmHandler}
+          defaultValues={selectedExpense}
+        />
 
-      {isEditing && (
-        <View style={styles.deleteContainer} testID="manageDelete">
-          <IconButton
-            icon="trash"
-            color={GlobalStyles.colors.error500}
-            size={36}
-            onPress={deleteExpenseHandler}
-            testID="deleteButton"
-          />
-        </View>
-      )}
-    </View>
+        {isEditing && (
+          <View style={styles.deleteContainer} testID="manageDelete">
+            <IconButton
+              icon="trash"
+              color={GlobalStyles.colors.error500}
+              size={36}
+              onPress={deleteExpenseHandler}
+              testID="deleteButton"
+            />
+          </View>
+        )}
+      </View>
+    </Pressable>
   );
 };
 
