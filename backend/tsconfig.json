@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "types": ["jest", "node"],
+    "typeRoots": ["./ts-declarations", "node_modules/@types"],
+    "sourceMap": true,
+    "declaration": true,
+    "inlineSources": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictFunctionTypes": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "outDir": "./dist",
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
