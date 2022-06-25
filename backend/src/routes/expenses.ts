@@ -1,13 +1,13 @@
+import { getAllExpenses } from '@/controllers/expensesController';
 import { Expense } from '@/types';
 import { Router } from 'express';
-
-const expenses: Expense[] = [{ amount: 4, description: '', date: new Date() }];
 
 const router = Router();
 
 type RequestParams = { expenseId: string };
 
-router.get('/expense', (req, res) => {
+router.get('/expense', async (req, res) => {
+  const expenses = await getAllExpenses();
   res.status(200).json({ expenses });
 });
 
