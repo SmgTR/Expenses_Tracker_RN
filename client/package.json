@@ -27,6 +27,7 @@
     "react-native-screens": "^3.13.1",
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
+    "redux-thunk": "^2.4.1",
     "ts-node": "^10.8.1"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/jest": "^28.1.1",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.66.13",
+    "@types/redux-thunk": "^2.1.0",
     "jest": "27.1.1",
     "jest-expo": "^45.0.1",
     "react-test-renderer": "^17.0.2",
