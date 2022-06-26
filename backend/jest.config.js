@@ -8,5 +8,7 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  transformIgnorePatterns: ['<rootDir>/node_modules/']
+  clearMocks: true,
+  setupFiles: ['<rootDir>/setup-tests.ts'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/config']
 };

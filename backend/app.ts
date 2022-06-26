@@ -1,15 +1,7 @@
 import 'dotenv/config';
 
-import express from 'express';
+import createServer from '@/utils/server';
 
-import bodyParser from 'body-parser';
-
-import expenseRouter from '@/routes/expenses';
-
-const app = express();
-
-app.use('/api/v1', expenseRouter);
-
-app.use(bodyParser.json());
+const app = createServer();
 
 app.listen(3000);

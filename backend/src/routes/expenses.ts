@@ -11,7 +11,7 @@ router.get('/expenses', async (req, res) => {
   res.status(200).json({ expenses });
 });
 
-export const allExpenses = router.post('/expense', (req, res) => {
+router.post('/expense', (req, res) => {
   const newExpense: Expense = {
     amount: req.body.amount,
     description: req.body.description,
