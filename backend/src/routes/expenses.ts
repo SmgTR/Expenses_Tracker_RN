@@ -6,12 +6,12 @@ const router = Router();
 
 type RequestParams = { expenseId: string };
 
-router.get('/expense', async (req, res) => {
+router.get('/expenses', async (req, res) => {
   const expenses = await getAllExpenses();
   res.status(200).json({ expenses });
 });
 
-router.post('/expense', (req, res) => {
+export const allExpenses = router.post('/expense', (req, res) => {
   const newExpense: Expense = {
     amount: req.body.amount,
     description: req.body.description,
