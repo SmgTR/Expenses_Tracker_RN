@@ -1,5 +1,5 @@
-import { getAllExpenses } from '@/controllers/expensesController';
-import { Expense } from '@/types';
+import { addExpense, getAllExpenses } from '@/controllers/expensesController';
+import { ExpenseType } from '@/types';
 import { Router } from 'express';
 
 const router = Router();
@@ -7,17 +7,22 @@ const router = Router();
 type RequestParams = { expenseId: string };
 
 router.get('/expenses', async (req, res) => {
-  const expenses = await getAllExpenses();
-  res.status(200).json({ expenses });
+  try {
+    const expenses = await getAllExpenses();
+    res.status(200).json({ expenses });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-router.post('/expense', (req, res) => {
-  const newExpense: Expense = {
-    amount: req.body.amount,
-    description: req.body.description,
-    date: req.body.date
-  };
-  res.status(200).json(newExpense);
+router.post('/expense', async (req, res) => {
+  try {
+    const params = req.body as ExpenseType;
+    const expense = await addExpense(params);
+    res.status(200).json({ message: 'Expense created', expense });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.put('/expense/:expenseId', (req, res) => {

@@ -1,12 +1,11 @@
-import db from '@/utils/database';
+import Expense from '@/models/expense';
+import { ExpenseType } from '@/types';
 
 export const getAllExpenses = () => {
-  return db
-    .execute('SELECT * FROM EXPENSES')
-    .then((result) => {
-      return result[0];
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  console.log('placeholder');
+};
+
+export const addExpense = async ({ description, amount, date }: ExpenseType) => {
+  const newProduct = await Expense.create({ description, amount, date });
+  return newProduct;
 };

@@ -1,7 +1,16 @@
 import 'dotenv/config';
 
+import sequelize from '@/utils/database';
+
 import createServer from '@/utils/server';
 
 const app = createServer();
 
-app.listen(3000);
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
