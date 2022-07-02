@@ -9,6 +9,7 @@ import ExpenseForm from '@/Components/ManageExpense/ExpenseForm';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addExpense, deleteExpense, updateExpense } from '@/redux/slices/expenses-slice';
+import { createExpense } from '@/redux/services/expense';
 
 import { ExpenseInputsType } from '@/types';
 
@@ -49,8 +50,7 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
       );
     } else {
       dispatch(
-        addExpense({
-          id: Math.random(),
+        createExpense({
           ...expenseData
         })
       );
