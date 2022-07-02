@@ -1,8 +1,12 @@
 import Expense from '@/models/expense';
 import { ExpenseType } from '@/types';
 
-export const getAllExpenses = () => {
-  console.log('placeholder');
+export const getAllExpenses = async () => {
+  return await Expense.findAll();
+};
+
+export const getExpense = async (expenseId: string) => {
+  return await Expense.findByPk(expenseId);
 };
 
 export const addExpense = async ({ description, amount, date }: ExpenseType) => {
