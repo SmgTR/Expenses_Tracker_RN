@@ -4,6 +4,21 @@ import { Provider } from 'react-redux';
 
 import { store } from '../src/redux/store';
 import { getFormattedDate } from '@/utils/date';
+import axios from 'axios';
+
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+mockedAxios.post.mockResolvedValueOnce({
+  data: {
+    expense: {
+      id: Math.random(),
+      description: 'motorhead cd',
+      amount: 22,
+      date: '2022-07-02'
+    }
+  }
+});
 
 describe('App navigation and list actions', () => {
   let wrapper: RenderAPI;
