@@ -23,6 +23,6 @@ describe('Get and display list of expenses', () => {
   });
 
   test('Amount displays with only two units after dot', () => {
-    expect(wrapper.getByText(expenses[0].amount.toFixed(2).toString())).toBeTruthy();
+    expect(wrapper.getByText(expenses[0].amount.toFixed(2))).toBeTruthy();
   });
 });
