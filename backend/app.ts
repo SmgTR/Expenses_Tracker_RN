@@ -8,7 +8,7 @@ const app = createServer();
 
 sequelize
   .sync()
-  .then((result) => {
+  .then(() => {
     app.listen(3000);
   })
   .catch((err) => {
