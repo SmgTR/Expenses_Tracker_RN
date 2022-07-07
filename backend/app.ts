@@ -11,6 +11,6 @@ sequelize
   .then(() => {
     app.listen(3000);
   })
-  .catch((err) => {
-    console.log(err);
+  .catch((err: any) => {
+    console.log({ message: 'Something went wrong, try again later', err });
   });
