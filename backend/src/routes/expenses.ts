@@ -32,7 +32,7 @@ router.post('/expense', async (req, res) => {
     const expense = await addExpense(params);
     res.status(200).json({ message: 'Expense created', expense });
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ message: 'Something went wrong, check provided data' });
   }
 });
 
