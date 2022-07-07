@@ -5,7 +5,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --verbose"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",

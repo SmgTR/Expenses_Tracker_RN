@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --watchAll",
+    "test": "jest --detectOpenHandles --watchAll  --verbose",
     "start": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./app.ts"
   },
   "author": "",
