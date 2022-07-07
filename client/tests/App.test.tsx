@@ -1,24 +1,15 @@
 import { render, fireEvent, RenderAPI } from '@testing-library/react-native';
-import App from '../App';
-import { Provider } from 'react-redux';
-
-import { store } from '../src/redux/store';
-import { getFormattedDate } from '@/utils/date';
 import axios from 'axios';
+
+import { Provider } from 'react-redux';
+import { store } from '../src/redux/store';
+
+import { getFormattedDate } from '@/utils/date';
+
+import App from '../App';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-mockedAxios.post.mockResolvedValueOnce({
-  data: {
-    expense: {
-      id: Math.random(),
-      description: 'motorhead cd',
-      amount: 22,
-      date: '2022-07-02'
-    }
-  }
-});
 
 describe('App navigation and list actions', () => {
   let wrapper: RenderAPI;
@@ -56,6 +47,17 @@ describe('App navigation and list actions', () => {
   });
 
   test('Add list item', async () => {
+    mockedAxios.post.mockResolvedValueOnce({
+      data: {
+        expense: {
+          id: Math.random(),
+          description: 'motorhead cd',
+          amount: 22,
+          date: '2022-07-07'
+        }
+      }
+    });
+
     const addIcon = await wrapper.findByTestId(/addButton/i);
     fireEvent(addIcon, 'press');
 
@@ -63,17 +65,15 @@ describe('App navigation and list actions', () => {
     const dateInput = await wrapper.getByTestId('formDate');
     const amountInput = await wrapper.getByTestId('formAmount');
 
-    const date = getFormattedDate(new Date());
-
     fireEvent(descriptionInput, 'changeText', 'motorhead cd');
-    fireEvent(dateInput, 'changeText', date);
+    fireEvent(dateInput, 'changeText', '2022-07-07');
     fireEvent(amountInput, 'changeText', '22');
 
     const addButton = await wrapper.findByText(/add/i);
     await fireEvent(addButton, 'press');
 
     await wrapper.findByText(/motorhead cd/i);
-    await wrapper.findByText(date.toString());
+    await wrapper.findByText('2022-07-07');
     await wrapper.findByText('22.00');
   });
 
