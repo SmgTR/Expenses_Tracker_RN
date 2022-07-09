@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,11 +12,18 @@ import IconButton from '@/Components/UI/IconButton';
 
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { useAppDispatch } from '@/redux/hooks';
+import { getAllExpenses } from '@/redux/services/expense';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpensesOverview() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllExpenses());
+  }, []);
+
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({

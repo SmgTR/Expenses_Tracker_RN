@@ -8,10 +8,10 @@ import { GlobalStyles } from '@/Constants/styles';
 import ExpenseForm from '@/Components/ManageExpense/ExpenseForm';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { addExpense, deleteExpense, updateExpense } from '@/redux/slices/expenses-slice';
-import { createExpense } from '@/redux/services/expense';
 
-import { ExpenseInputsType } from '@/types';
+import { createExpense, editExpense, removeExpense } from '@/redux/services/expense';
+
+import { Expense } from '@/types';
 
 type Props = NativeStackScreenProps<AppRootParamList, 'ManageExpense'>;
 
@@ -32,7 +32,7 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
-    dispatch(deleteExpense(editedExpenseId));
+    dispatch(removeExpense(editedExpenseId.expenseId));
     navigation.goBack();
   };
 
@@ -40,14 +40,9 @@ const ManageExpenses: FC<Props> = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  const confirmHandler = (expenseData: ExpenseInputsType) => {
+  const confirmHandler = (expenseData: Expense) => {
     if (isEditing) {
-      dispatch(
-        updateExpense({
-          id: editedExpenseId.expenseId,
-          expenseChanges: { ...expenseData }
-        })
-      );
+      dispatch(editExpense({ ...expenseData, id: editedExpenseId.expenseId }));
     } else {
       dispatch(
         createExpense({

@@ -20,10 +20,10 @@ export const expensesSlice = createSlice({
     updateExpense: (state, { payload }) => {
       const updatableExpenseIndex = state.findIndex((expense) => expense.id === payload.id);
       const updatableExpense = state[updatableExpenseIndex];
-      state[updatableExpenseIndex] = { ...updatableExpense, ...payload.expenseChanges };
+      state[updatableExpenseIndex] = { ...updatableExpense, ...payload };
     },
     deleteExpense: (state, { payload }) => {
-      return state.filter((expense) => expense.id !== payload.expenseId);
+      return state.filter((expense) => expense.id !== payload);
     }
   }
 });
