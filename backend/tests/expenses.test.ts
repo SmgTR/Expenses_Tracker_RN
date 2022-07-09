@@ -1,3 +1,4 @@
+import Expense from '@/models/expense';
 import createServer from '@/utils/server';
 import supertest from 'supertest';
 
@@ -7,13 +8,24 @@ const dummyExpense = {
   date: new Date()
 };
 
+const editedExpense = {
+  description: 'California trip',
+  amount: 233.4,
+  date: new Date()
+};
+
 jest.mock('@/models/expense', () => ({
   findAll: jest.fn(),
   create: jest.fn().mockImplementation(({ amount, description, date }) => {
     if (!amount || !description || !date) {
       throw new Error();
+    } else {
+      return dummyExpense;
     }
-  })
+  }),
+  findByPk: jest.fn().mockImplementation(() => Promise.resolve(Expense)),
+  save: jest.fn().mockImplementation(() => Promise.resolve(editedExpense)),
+  destroy: jest.fn()
 }));
 
 const app = createServer();
@@ -26,10 +38,7 @@ describe('Manage expenses', () => {
   });
   describe('Create expense', () => {
     test('Create new expense', async () => {
-      await supertest(app)
-        .post('/api/v1/expense')
-        .send({ ...dummyExpense })
-        .expect(200);
+      await supertest(app).post('/api/v1/expense').send(dummyExpense).expect(201);
     });
 
     test('New expense should fail if payload data is not provided', async () => {
@@ -39,6 +48,35 @@ describe('Manage expenses', () => {
         const response = await supertest(app).post('/api/v1/expense').send(body);
         expect(response.statusCode).toBe(400);
       }
+    });
+  });
+  describe('Edit expense', () => {
+    test('Edit expense with correct data', async () => {
+      await supertest(app)
+        .put('/api/v1/expense?expenseId=5')
+        .send({ ...dummyExpense })
+        .expect(200);
+    });
+
+    test('Editing fails if incorrect data', async () => {
+      const bodyData = [{ description: 'description' }, { amount: 20 }, { date: '2022-06-12' }, {}];
+      for (const body of bodyData) {
+        const response = await supertest(app).put('/api/v1/expense').send(body);
+        expect(response.statusCode).toBe(400);
+      }
+    });
+
+    test('It saves edited data', async () => {
+      const response = await supertest(app)
+        .put('/api/v1/expense?expenseId=5')
+        .send({ ...dummyExpense });
+      expect(response.body.editedExpense.description).toMatch(/california trip/i);
+    });
+  });
+  describe('Delete expense', () => {
+    test('It deletes expense item', async () => {
+      const response = await supertest(app).delete('/api/v1/expense?expenseId=5');
+      expect(response.statusCode).toBe(204);
     });
   });
 });
