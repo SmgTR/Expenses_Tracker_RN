@@ -1,24 +1,38 @@
-import Sequelize from 'sequelize';
+import {
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  DataTypes,
+  CreationOptional
+} from 'sequelize';
 
 import sequelize from '@/utils/database';
 
-const Expense = sequelize.define('expense', {
+export interface ExpenseModel
+  extends Model<InferAttributes<ExpenseModel>, InferCreationAttributes<ExpenseModel>> {
+  id: CreationOptional<number>;
+  amount: CreationOptional<number>;
+  description: CreationOptional<string>;
+  date: CreationOptional<Date>;
+}
+
+const Expense = sequelize.define<ExpenseModel>('expense', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
   description: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   amount: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   date: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false
   }
 });

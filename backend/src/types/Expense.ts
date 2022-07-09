@@ -3,3 +3,10 @@ export interface ExpenseType {
   description: string;
   date: Date;
 }
+
+export interface ExpenseOutput {
+  id: number;
+  amount: number;
+  description: string;
+  date: Date;
+}
