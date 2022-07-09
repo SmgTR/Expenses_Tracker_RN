@@ -7,6 +7,7 @@ import { store } from '../src/redux/store';
 import { getFormattedDate } from '@/utils/date';
 
 import App from '../App';
+import { deleteExpense } from '@/redux/slices/expenses-slice';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -49,8 +50,8 @@ describe('App navigation and list actions', () => {
   test('Add list item', async () => {
     mockedAxios.post.mockResolvedValueOnce({
       data: {
-        expense: {
-          id: Math.random(),
+        newExpense: {
+          id: 1,
           description: 'motorhead cd',
           amount: 22,
           date: '2022-07-07'
@@ -99,7 +100,18 @@ describe('App navigation and list actions', () => {
     fireEvent(amountInput, 'changeText', '22');
 
     const editButton = await wrapper.findByText(/update/i);
+    mockedAxios.put.mockResolvedValueOnce({
+      data: {
+        editedExpense: {
+          id: 1,
+          description: 'guns n roses cd',
+          amount: 22,
+          date: '2022-07-07'
+        }
+      }
+    });
     fireEvent(editButton, 'press');
+
     await wrapper.findByText(/guns n roses cd/i);
   });
 
@@ -107,6 +119,7 @@ describe('App navigation and list actions', () => {
     const listItem = await wrapper.findByText(/guns n roses cd/i);
     fireEvent(listItem, 'press');
     const deleteButton = await wrapper.findByTestId('deleteButton');
+    mockedAxios.delete.mockResolvedValueOnce(store.dispatch(deleteExpense(1)));
     fireEvent(deleteButton, 'press');
     expect(wrapper.queryByText(/guns n roses cd/i)).not.toBeTruthy();
   });
