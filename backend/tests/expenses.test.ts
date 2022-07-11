@@ -1,3 +1,4 @@
+import { User } from '@/models';
 import Expense from '@/models/expense';
 import createServer from '@/utils/server';
 import supertest from 'supertest';
@@ -5,7 +6,9 @@ import supertest from 'supertest';
 const dummyExpense = {
   description: 'Macbook Pro 244',
   amount: 233.4,
-  date: new Date()
+  date: new Date(),
+  userId: 1,
+  save: jest.fn().mockImplementation(() => editedExpense)
 };
 
 const editedExpense = {
@@ -13,6 +16,24 @@ const editedExpense = {
   amount: 233.4,
   date: new Date()
 };
+
+jest.mock('@/models/user', () => ({
+  findAll: jest.fn(),
+  findByPk: jest.fn().mockImplementation(() => Promise.resolve(User)),
+  destroy: jest.fn(),
+  getExpenses: jest.fn().mockImplementation(async () => {
+    return await Promise.resolve(User).then(() => {
+      return [dummyExpense];
+    });
+  }),
+  createExpense: jest.fn().mockImplementation(({ amount, description, date }) => {
+    if (!amount || !description || !date) {
+      throw new Error();
+    } else {
+      return dummyExpense;
+    }
+  })
+}));
 
 jest.mock('@/models/expense', () => ({
   findAll: jest.fn(),
@@ -24,7 +45,9 @@ jest.mock('@/models/expense', () => ({
     }
   }),
   findByPk: jest.fn().mockImplementation(() => Promise.resolve(Expense)),
-  save: jest.fn().mockImplementation(() => Promise.resolve(editedExpense)),
+  save: jest.fn().mockImplementation(() => {
+    Promise.resolve(editedExpense);
+  }),
   destroy: jest.fn()
 }));
 
@@ -38,7 +61,8 @@ describe('Manage expenses', () => {
   });
   describe('Create expense', () => {
     test('Create new expense', async () => {
-      await supertest(app).post('/api/v1/expense').send(dummyExpense).expect(201);
+      const expense = await supertest(app).post('/api/v1/expense').send(dummyExpense);
+      expect(expense.statusCode).toBe(201);
     });
 
     test('New expense should fail if payload data is not provided', async () => {
@@ -52,7 +76,7 @@ describe('Manage expenses', () => {
   });
   describe('Edit expense', () => {
     test('Edit expense with correct data', async () => {
-      await supertest(app)
+      const response = await supertest(app)
         .put('/api/v1/expense?expenseId=5')
         .send({ ...dummyExpense })
         .expect(200);
