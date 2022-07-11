@@ -27,10 +27,11 @@ export const getExpense = async (req: Request, res: Response) => {
 export const addExpense = async (req: Request, res: Response) => {
   try {
     const { description, amount, date } = req.body as ExpenseType;
-    const newExpense = await Expense.create({ description, amount, date });
+
+    const newExpense = await req.user.createExpense({ description, amount, date });
     if (!newExpense) throw new Error();
     res.status(201).json({ message: 'Expense created', newExpense });
-  } catch {
+  } catch (err) {
     res.status(400).json({ message: 'Something went wrong, check provided data' });
   }
 };
@@ -42,16 +43,22 @@ export const editExpense = async (req: Request, res: Response) => {
 
     if (!description || !amount || !date) throw new Error();
 
-    const editedExpense = await Expense.findByPk(expenseId).then((expense) => {
-      if (!expense) throw new Error();
-      expense.description = description;
-      expense.amount = amount;
-      expense.date = date;
-      return expense?.save();
-    });
+    const editedExpense = await req.user
+      .getExpenses({ where: { id: expenseId } })
+      .then((expenses) => {
+        if (!expenses) throw new Error();
+        const [expense] = expenses;
+        expense.description = description;
+        expense.amount = amount;
+        expense.date = date;
+        return expense;
+      })
+      .then((expense) => {
+        return expense?.save();
+      });
 
     return res.status(200).json({ message: 'Expense update', editedExpense });
-  } catch {
+  } catch (err) {
     return res.status(400).json({ message: 'Something went wrong, check provided data' });
   }
 };
