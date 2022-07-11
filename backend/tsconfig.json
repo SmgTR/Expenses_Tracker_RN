@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "types": ["jest", "node"],
-    "typeRoots": ["./ts-declarations", "node_modules/@types"],
+    "typeRoots": ["./ts-declarations", "node_modules/@types", "./src/types/global"],
     "sourceMap": true,
     "declaration": true,
     "inlineSources": true,
