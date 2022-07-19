@@ -48,13 +48,15 @@ describe('App navigation and list actions', () => {
   });
 
   test('Add list item', async () => {
+    const dateToday = getFormattedDate(new Date());
+
     mockedAxios.post.mockResolvedValueOnce({
       data: {
         newExpense: {
           id: 1,
           description: 'motorhead cd',
           amount: 22,
-          date: '2022-07-07'
+          date: dateToday
         }
       }
     });
@@ -67,14 +69,14 @@ describe('App navigation and list actions', () => {
     const amountInput = await wrapper.getByTestId('formAmount');
 
     fireEvent(descriptionInput, 'changeText', 'motorhead cd');
-    fireEvent(dateInput, 'changeText', '2022-07-07');
+    fireEvent(dateInput, 'changeText', dateToday);
     fireEvent(amountInput, 'changeText', '22');
 
     const addButton = await wrapper.findByText(/add/i);
     await fireEvent(addButton, 'press');
 
     await wrapper.findByText(/motorhead cd/i);
-    await wrapper.findByText('2022-07-07');
+    await wrapper.findByText(dateToday);
     await wrapper.findByText('22.00');
   });
 
@@ -106,7 +108,7 @@ describe('App navigation and list actions', () => {
           id: 1,
           description: 'guns n roses cd',
           amount: 22,
-          date: '2022-07-07'
+          date: '2022-07-17'
         }
       }
     });
