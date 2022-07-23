@@ -14,15 +14,6 @@ User.hasMany(Expense, { sourceKey: 'id' });
 sequelize
   .sync()
   .then(() => {
-    return User.findByPk(1);
-  })
-  .then((user) => {
-    if (!user) {
-      return User.create({ email: 'test@test.com', password: 'test' });
-    }
-    return user;
-  })
-  .then(() => {
     app.listen(3000);
   })
   .catch((err: any) => {
