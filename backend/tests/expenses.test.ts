@@ -1,6 +1,7 @@
 import { User } from '@/models';
 import Expense from '@/models/expense';
 import createServer from '@/utils/server';
+import passport from 'passport';
 import supertest from 'supertest';
 
 const dummyExpense = {
@@ -11,6 +12,11 @@ const dummyExpense = {
   save: jest.fn().mockImplementation(() => editedExpense)
 };
 
+const dummyUser = {
+  id: 1,
+  email: 'test@test.pl'
+};
+
 const editedExpense = {
   description: 'California trip',
   amount: 233.4,
@@ -18,8 +24,9 @@ const editedExpense = {
 };
 
 jest.mock('@/models/user', () => ({
-  findAll: jest.fn(),
-  findByPk: jest.fn().mockImplementation(() => Promise.resolve(User)),
+  findAll: jest.fn().mockImplementation(() => Promise.resolve(User)),
+  findByPk: jest.fn().mockImplementation(() => dummyUser),
+  findOne: jest.fn().mockImplementation(() => Promise.resolve(dummyUser as User)),
   destroy: jest.fn(),
   getExpenses: jest.fn().mockImplementation(async () => {
     return await Promise.resolve(User).then(() => {
@@ -34,6 +41,10 @@ jest.mock('@/models/user', () => ({
     }
   })
 }));
+
+// passport.authenticate = jest.fn(() => {
+//   return { id: 1, email: 'tester@test.pl' } as User;
+// });
 
 jest.mock('@/models/expense', () => ({
   findAll: jest.fn(),
@@ -52,7 +63,7 @@ jest.mock('@/models/expense', () => ({
 }));
 
 const app = createServer();
-
+// try to get token, maybe not working cuz of unathorized
 describe('Manage expenses', () => {
   describe('Get expense', () => {
     test('Send all expenses', async () => {
