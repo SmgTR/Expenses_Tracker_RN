@@ -12,12 +12,12 @@ import { Router } from 'express';
 
 const router = Router();
 
+router.use(passport.authenticate('jwt', { session: false }));
 router.get('/expenses', getAllExpenses);
-
 router
-  .get('/expense', passport.authenticate('jwt', { session: false }), getExpense)
-  .post('/expense', passport.authenticate('jwt', { session: false }), addExpense)
-  .put('/expense', passport.authenticate('jwt', { session: false }), editExpense)
-  .delete('/expense', passport.authenticate('jwt', { session: false }), deleteExpense);
+  .get('/expense', getExpense)
+  .post('/expense', addExpense)
+  .put('/expense', editExpense)
+  .delete('/expense', deleteExpense);
 
 export default router;
