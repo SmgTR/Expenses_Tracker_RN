@@ -1,4 +1,4 @@
-import { render, fireEvent, RenderAPI } from '@testing-library/react-native';
+import { render, fireEvent, RenderAPI, waitFor, act } from '@testing-library/react-native';
 import axios from 'axios';
 
 import { Provider } from 'react-redux';
@@ -10,6 +10,7 @@ import App from '../App';
 import { deleteExpense } from '@/redux/slices/expenses-slice';
 
 jest.mock('axios');
+
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('App navigation and list actions', () => {
@@ -50,7 +51,7 @@ describe('App navigation and list actions', () => {
   test('Add list item', async () => {
     const dateToday = getFormattedDate(new Date());
 
-    mockedAxios.post.mockResolvedValueOnce({
+    await mockedAxios.post.mockResolvedValueOnce({
       data: {
         newExpense: {
           id: 1,
@@ -64,9 +65,9 @@ describe('App navigation and list actions', () => {
     const addIcon = await wrapper.findByTestId(/addButton/i);
     fireEvent(addIcon, 'press');
 
-    const descriptionInput = await wrapper.getByTestId('formDescription');
-    const dateInput = await wrapper.getByTestId('formDate');
-    const amountInput = await wrapper.getByTestId('formAmount');
+    const descriptionInput = await wrapper.findByTestId('formDescription');
+    const dateInput = await wrapper.findByTestId('formDate');
+    const amountInput = await wrapper.findByTestId('formAmount');
 
     fireEvent(descriptionInput, 'changeText', 'motorhead cd');
     fireEvent(dateInput, 'changeText', dateToday);
@@ -91,9 +92,9 @@ describe('App navigation and list actions', () => {
     const listItem = await wrapper.findByText(/motorhead cd/i);
     fireEvent(listItem, 'press');
 
-    const descriptionInput = await wrapper.getByTestId('formDescription');
-    const dateInput = await wrapper.getByTestId('formDate');
-    const amountInput = await wrapper.getByTestId('formAmount');
+    const descriptionInput = await wrapper.findByTestId('formDescription');
+    const dateInput = await wrapper.findByTestId('formDate');
+    const amountInput = await wrapper.findByTestId('formAmount');
 
     const date = getFormattedDate(new Date());
 
@@ -102,7 +103,7 @@ describe('App navigation and list actions', () => {
     fireEvent(amountInput, 'changeText', '22');
 
     const editButton = await wrapper.findByText(/update/i);
-    mockedAxios.put.mockResolvedValueOnce({
+    await mockedAxios.put.mockResolvedValueOnce({
       data: {
         editedExpense: {
           id: 1,
@@ -121,8 +122,11 @@ describe('App navigation and list actions', () => {
     const listItem = await wrapper.findByText(/guns n roses cd/i);
     fireEvent(listItem, 'press');
     const deleteButton = await wrapper.findByTestId('deleteButton');
-    mockedAxios.delete.mockResolvedValueOnce(store.dispatch(deleteExpense(1)));
-    fireEvent(deleteButton, 'press');
-    expect(wrapper.queryByText(/guns n roses cd/i)).not.toBeTruthy();
+    await waitFor(() => {
+      mockedAxios.delete.mockResolvedValueOnce(store.dispatch(deleteExpense(1)));
+      fireEvent(deleteButton, 'press');
+    });
+    const text = wrapper.queryByText(/guns n roses cd/i);
+    expect(text).toBeNull();
   });
 });

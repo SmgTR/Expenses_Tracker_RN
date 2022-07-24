@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { render, RenderAPI } from '@testing-library/react-native';
+import { render, RenderAPI, cleanup } from '@testing-library/react-native';
+
 import ExpensesList from '../src/Components/ExpensesOutput/ExpensesList';
 
 const expenses = [
@@ -17,12 +18,14 @@ describe('Get and display list of expenses', () => {
       </NavigationContainer>
     );
   });
+  afterEach(cleanup);
 
   test('Check if item is displayed', () => {
-    expect(wrapper.getByText(expenses[0].description)).toBeTruthy();
+    expect(wrapper.findByText(expenses[0].description)).toBeTruthy();
   });
 
-  test('Amount displays with only two units after dot', () => {
-    expect(wrapper.getByText(expenses[0].amount.toFixed(2))).toBeTruthy();
+  test('Amount displays with only two units after dot', async () => {
+    const amount = await wrapper.findByText(expenses[0].amount.toFixed(2));
+    expect(amount).toBeTruthy();
   });
 });

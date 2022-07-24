@@ -13,12 +13,13 @@ describe('Calculate and display info from expenses list', () => {
     wrapper = render(<ExpensesSummary expenses={expenses} periodName="7 Days" />);
   });
 
-  test('Display period of items included in list', () => {
-    expect(wrapper.getByText('7 Days')).toBeTruthy();
+  test('Display period of items included in list', async () => {
+    const period = await wrapper.findByText('7 Days');
+    expect(period).toBeTruthy();
   });
 
-  test('Calculate amount of expenses', () => {
-    const summary = wrapper.getByTestId('expenses-summary');
+  test('Calculate amount of expenses', async () => {
+    const summary = await wrapper.findByTestId('expenses-summary');
     expect(summary.children.join('')).toBe('$ 99.28');
   });
 });
