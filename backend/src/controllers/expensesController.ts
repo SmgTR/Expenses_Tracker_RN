@@ -7,7 +7,8 @@ type RequestQuery = { expenseId: string };
 
 export const getAllExpenses = async (req: Request, res: Response) => {
   try {
-    const expenses = await Expense.findAll();
+    const user = (await req.user) as User;
+    const expenses = await Expense.findAll({ where: { userId: user.id } });
     res.status(200).json({ expenses });
   } catch (err) {
     res.status(400).json({ message: 'Something went wrong, check provided data' });
@@ -17,11 +18,16 @@ export const getAllExpenses = async (req: Request, res: Response) => {
 export const getExpense = async (req: Request, res: Response) => {
   try {
     const { expenseId } = req.query as RequestQuery;
-    const expense = await Expense.findByPk(expenseId);
-    if (!expense) throw new Error();
-    res.status(200).json(expense);
+    const user = (await req.user) as User;
+
+    const expense = await Expense.findOne({ where: { id: expenseId, userId: user.id } });
+
+    if (!expense) {
+      return res.status(404).json({ message: 'Item does not exist' });
+    }
+    return res.status(200).json(expense);
   } catch {
-    res.status(400).json({ message: 'Something went wrong, check provided data' });
+    return res.status(400).json({ message: 'Something went wrong, check provided data' });
   }
 };
 
@@ -48,7 +54,7 @@ export const editExpense = async (req: Request, res: Response) => {
     const user = (await req.user) as User;
     if (!user) throw new Error();
     const editedExpense = await user
-      .getExpenses({ where: { id: expenseId } })
+      .getExpenses({ where: { id: expenseId, userId: user.id } })
       .then((expenses) => {
         if (!expenses) throw new Error();
         const [expense] = expenses;
@@ -70,11 +76,12 @@ export const editExpense = async (req: Request, res: Response) => {
 export const deleteExpense = async (req: Request, res: Response) => {
   try {
     const { expenseId } = req.query as RequestQuery;
-    await Expense.findByPk(expenseId).then((expense) => {
+    const user = (await req.user) as User;
+    await user.getExpenses({ where: { id: expenseId, userId: user.id } }).then((expense) => {
       if (!expense) throw new Error();
-      return expense.destroy();
+      return expense[0].destroy();
     });
-    return res.status(204).json();
+    return res.status(204).json({ message: 'Item deleted' });
   } catch {
     return res.status(400).json({ message: 'Something went wrong, check provided data' });
   }

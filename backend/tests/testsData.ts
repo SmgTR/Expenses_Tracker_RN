@@ -1,9 +1,11 @@
 export const dummyExpense = {
+  id: 5,
   description: 'Macbook Pro 244',
   amount: 233.4,
   date: new Date(),
   userId: 1,
-  save: jest.fn().mockImplementation(() => editedExpense)
+  save: jest.fn().mockImplementation(() => editedExpense),
+  destroy: jest.fn()
 };
 
 export const dummyUser = {
@@ -17,7 +19,10 @@ export const dummyUserInput = {
 };
 
 export const editedExpense = {
+  id: 5,
   description: 'California trip',
   amount: 233.4,
-  date: new Date()
+  date: new Date(),
+  userId: 1,
+  destroy: jest.fn()
 };

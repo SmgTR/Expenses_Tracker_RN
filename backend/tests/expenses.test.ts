@@ -72,10 +72,10 @@ describe('Manage expenses', () => {
   });
   describe('Delete expense', () => {
     test('It deletes expense item', async () => {
-      const response = await supertest(app)
+      await supertest(app)
         .delete('/api/v1/expense?expenseId=5')
-        .set('Authorization', 'Bearer ' + userToken);
-      expect(response.statusCode).toBe(204);
+        .set('Authorization', 'Bearer ' + userToken)
+        .expect(204);
     });
   });
 });
