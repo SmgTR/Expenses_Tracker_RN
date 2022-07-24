@@ -1,3 +1,4 @@
+import { User } from '@/models';
 import Expense from '@/models/expense';
 import { ExpenseType } from '@/types';
 import { Request, Response } from 'express';
@@ -28,7 +29,9 @@ export const addExpense = async (req: Request, res: Response) => {
   try {
     const { description, amount, date } = req.body as ExpenseType;
 
-    const newExpense = await req.user.createExpense({ description, amount, date });
+    const user = (await req.user) as User;
+    if (!user) throw new Error();
+    const newExpense = await user.createExpense({ description, amount, date });
     if (!newExpense) throw new Error();
     res.status(201).json({ message: 'Expense created', newExpense });
   } catch (err) {
@@ -42,8 +45,9 @@ export const editExpense = async (req: Request, res: Response) => {
     const { description, amount, date } = req.body as ExpenseType;
 
     if (!description || !amount || !date) throw new Error();
-
-    const editedExpense = await req.user
+    const user = (await req.user) as User;
+    if (!user) throw new Error();
+    const editedExpense = await user
       .getExpenses({ where: { id: expenseId } })
       .then((expenses) => {
         if (!expenses) throw new Error();

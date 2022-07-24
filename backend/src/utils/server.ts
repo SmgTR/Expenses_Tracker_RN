@@ -1,26 +1,22 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import expenseRouter from '@/routes/expenses';
+import userRouter from '@/routes/users';
 import bodyParser from 'body-parser';
 
-import { User } from '@/models';
+import { strategy } from '@/auth/passport';
 
-const userMiddlewear = (req: Request, res: Response, next: NextFunction) => {
-  User.findByPk(1)
-    .then((user) => {
-      if (user) {
-        req.user = user;
-      }
-      next();
-    })
-    .catch((err) => console.log(err));
-};
+import passport from 'passport';
 
 function createServer() {
   const app = express();
-
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 
-  app.use(userMiddlewear);
+  app.use(passport.initialize());
+
+  passport.use(strategy);
+
+  app.use('/api/v1', userRouter);
 
   app.use('/api/v1', expenseRouter);
 
