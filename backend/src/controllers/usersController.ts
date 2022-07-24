@@ -37,7 +37,7 @@ export const addUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body as RequestCredentials;
-    if (!email && !password) throw new Error();
+    if (!email || !password) throw new Error();
 
     const user = await User.findOne({ where: { email } });
     if (!user) return res.json({ message: 'Email or password does not match!' });
