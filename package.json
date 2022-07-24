@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cd ./client && yarn test --watchAll=false",
+    "test:front": "cd ./client && yarn test --watchAll=false",
+    "test:back": "cd ./backend && yarn test --watchAll=false",
     "prepare": "husky install",
     "backend": "cd ./backend && yarn start:dev",
     "frontend": "cd ./client && yarn start",
-    "cd:root": "cd ../"
+    "cd:root": "cd ../",
+    "install:all": "cd ./client && yarn install && cd .. && cd ./backend && yarn install"
   },
   "keywords": [],
   "author": "",

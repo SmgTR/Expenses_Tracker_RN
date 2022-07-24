@@ -4,7 +4,6 @@ import { ExpensesOutput } from '../Components';
 
 const RecentExpenses = () => {
   const allExpenses = useAppSelector((state) => state.expenses);
-  console.log(allExpenses);
   const recentExpenses = allExpenses.filter((expense) => {
     const today = new Date();
     const date7DaysAgo = getDateMinusDays(today.toString(), 7);
