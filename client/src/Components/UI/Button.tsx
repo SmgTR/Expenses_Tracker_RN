@@ -3,10 +3,14 @@ import { ButtonType } from '@/types';
 import { FC } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 
-const Button: FC<ButtonType> = ({ children, mode, style, onPress }) => {
+const Button: FC<ButtonType> = ({ children, mode, style, onPress, testID }) => {
   return (
     <View style={style}>
-      <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => pressed && styles.pressed}
+        testID={testID}
+      >
         <View style={[styles.button, mode === 'flat' && styles.flat]}>
           <Text style={[styles.buttonText, mode === 'flat' && styles.flatText]}>{children}</Text>
         </View>

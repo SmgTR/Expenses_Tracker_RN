@@ -97,7 +97,7 @@ const ExpenseForm: FC<ExpensesFormType> = ({
         {formIsInvalid && <Text>Invalid input values- please check your inputs</Text>}
       </Text>
       <View style={styles.buttonsContainer}>
-        <Button mode="flat" onPress={onCancel} style={styles.button}>
+        <Button mode="flat" onPress={() => onCancel()} style={styles.button}>
           Cancel
         </Button>
         <Button onPress={submitHandler} style={styles.button}>
