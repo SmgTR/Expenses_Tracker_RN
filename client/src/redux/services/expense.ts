@@ -3,9 +3,13 @@ import { Expense, ExpenseInputsType } from '@/types';
 import axios from 'axios';
 import { getFormattedDate } from '@/utils/date';
 
-export const getAllExpenses = () => async (dispatch: any) => {
+export const getAllExpenses = () => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+
   await axios
-    .get('http://127.0.0.1:3000/api/v1/expenses')
+    .get('http://127.0.0.1:3000/api/v1/expenses', {
+      headers: { Authorization: 'Bearer ' + user.token }
+    })
     .then(({ data }) => {
       const expensesList: Expense[] = data;
       dispatch(allExpenses(expensesList));
@@ -13,18 +17,27 @@ export const getAllExpenses = () => async (dispatch: any) => {
     .catch((err) => console.log(err));
 };
 
-export const createExpense = (expense: ExpenseInputsType) => async (dispatch: any) => {
-  await axios
-    .post('http://127.0.0.1:3000/api/v1/expense', expense)
-    .then(({ data }) => {
-      dispatch(addExpense(data.newExpense));
-    })
-    .catch((err) => console.log(err));
-};
+export const createExpense =
+  (expense: ExpenseInputsType) => async (dispatch: any, getState: any) => {
+    const { user } = getState();
 
-export const editExpense = (expense: Expense) => async (dispatch: any) => {
+    await axios
+      .post('http://127.0.0.1:3000/api/v1/expense', expense, {
+        headers: { Authorization: 'Bearer ' + user.token }
+      })
+      .then(({ data }) => {
+        dispatch(addExpense(data.newExpense));
+      })
+      .catch((err) => console.log(err));
+  };
+
+export const editExpense = (expense: Expense) => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+
   await axios
-    .put(`http://127.0.0.1:3000/api/v1/expense?expenseId=${expense.id}`, expense)
+    .put(`http://127.0.0.1:3000/api/v1/expense?expenseId=${expense.id}`, expense, {
+      headers: { Authorization: 'Bearer ' + user.token }
+    })
     .then(({ data }) => {
       data.editedExpense.date = getFormattedDate(data.editedExpense.date);
       dispatch(updateExpense(data.editedExpense));
@@ -32,9 +45,13 @@ export const editExpense = (expense: Expense) => async (dispatch: any) => {
     .catch((err) => console.log(err));
 };
 
-export const removeExpense = (expenseId: string) => async (dispatch: any) => {
+export const removeExpense = (expenseId: string) => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+
   await axios
-    .delete(`http://127.0.0.1:3000/api/v1/expense?expenseId=${expenseId}`)
+    .delete(`http://127.0.0.1:3000/api/v1/expense?expenseId=${expenseId}`, {
+      headers: { Authorization: 'Bearer ' + user.token }
+    })
     .then(() => {
       dispatch(deleteExpense(expenseId));
     })
