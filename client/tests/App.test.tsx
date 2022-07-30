@@ -24,6 +24,22 @@ describe('App navigation and list actions', () => {
     );
   });
 
+  test('login user', async () => {
+    const emailInput = await wrapper.findByTestId('loginEmail');
+    const passwordInput = await wrapper.findByTestId('loginPassword');
+
+    fireEvent(emailInput, 'changeText', 'john@doe.com');
+    fireEvent(passwordInput, 'changeText', 'Password123@');
+
+    const loginButton = await wrapper.findByTestId('loginButton');
+    await mockedAxios.post.mockResolvedValueOnce({
+      data: {
+        token: 'simpleToken'
+      }
+    });
+    await fireEvent(loginButton, 'press');
+  });
+
   test('Start on recent tab', async () => {
     await wrapper.findByText('Recent Expenses');
   });
@@ -109,7 +125,7 @@ describe('App navigation and list actions', () => {
           id: 1,
           description: 'guns n roses cd',
           amount: 22,
-          date: '2022-07-17'
+          date
         }
       }
     });
