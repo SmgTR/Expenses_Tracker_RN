@@ -14,6 +14,7 @@ const Input: FC<InputType> = ({ label, invalid, textInputConfig, style, testID }
   if (invalid) {
     inputStyles.push(styles.invalidInput);
   }
+
   return (
     <View style={[styles.inputContainer, style]}>
       <Text style={[styles.label, invalid && styles.invalidLabel]}>{label}</Text>

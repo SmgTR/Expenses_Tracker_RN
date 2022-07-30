@@ -1,4 +1,9 @@
-import { TextInputProps, GestureResponderEvent } from 'react-native';
+import {
+  TextInputProps,
+  GestureResponderEvent,
+  TextInputChangeEventData,
+  NativeSyntheticEvent
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface InputType {
@@ -12,7 +17,8 @@ export interface InputType {
 export interface ButtonType {
   mode?: string;
   style?: Object;
-  onPress: Function | ((event: GestureResponderEvent) => void);
+  onPress: (event: GestureResponderEvent) => void | null | undefined;
+  testID?: string;
 }
 
 export interface IconButtonType {

@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 
 import bcrypt from 'bcrypt';
 import { generateJWT } from '@/auth/jwtStrategy';
-import { json } from 'body-parser';
 
 type RequestCredentials = { email: string; password: string };
 
@@ -40,7 +39,9 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!email || !password) throw new Error();
 
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.json({ message: 'Email or password does not match!' });
+    if (!user) {
+      throw new Error('Email or password does not match!');
+    }
 
     const comparePassword = await bcrypt.compare(password, user?.password);
     if (!comparePassword) return res.json({ message: 'Email or password does not match!' });
