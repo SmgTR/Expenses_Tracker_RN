@@ -13,9 +13,7 @@ export const expensesSlice = createSlice({
     },
 
     allExpenses: (state, { payload }) => {
-      if ([...state] !== [...payload.expenses]) {
-        state.push(...payload.expenses);
-      }
+      state = [...payload.expenses];
     },
     updateExpense: (state, { payload }) => {
       const updatableExpenseIndex = state.findIndex((expense) => expense.id === payload.id);

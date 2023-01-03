@@ -3,6 +3,7 @@ import { getAllExpenses } from '@/redux/services/expense';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import { GlobalStyles } from '@/Constants/styles';
 import { IconButton } from '@/Components';
@@ -63,6 +64,9 @@ export function ExpensesOverview() {
         options={{
           title: 'Profile',
           tabBarLabel: 'Profile',
+          headerRight: () => {
+            return;
+          },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           )
@@ -74,24 +78,27 @@ export function ExpensesOverview() {
 
 export function ExpensesStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: GlobalStyles.colors.primary500
-        },
-        headerTintColor: 'white'
-      }}
-    >
-      <Stack.Screen
-        name="ExpensesOverview"
-        component={ExpensesOverview}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ManageExpense"
-        component={ManageExpenses}
-        options={{ presentation: 'modal' }}
-      />
-    </Stack.Navigator>
+    <>
+      <StatusBar style="light" />
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: GlobalStyles.colors.primary500
+          },
+          headerTintColor: 'white'
+        }}
+      >
+        <Stack.Screen
+          name="ExpensesOverview"
+          component={ExpensesOverview}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ManageExpense"
+          component={ManageExpenses}
+          options={{ presentation: 'modal' }}
+        />
+      </Stack.Navigator>
+    </>
   );
 }

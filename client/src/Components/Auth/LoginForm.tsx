@@ -2,14 +2,17 @@ import { View, StyleSheet, Text } from 'react-native';
 import { useState } from 'react';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { UserTypeInputs } from '@/types';
 import { loginUser } from '@/redux/services/user';
 import { GlobalStyles } from '@/Constants/styles';
 
+import { BASE_URL } from '@env';
+
 const LoginForm = () => {
   const dispatch = useAppDispatch();
-
+  const loggedInUser = useAppSelector((state) => state.user);
+  const [loginError, setLoginError] = useState(false);
   const [userData, setUserData] = useState({
     email: {
       value: '',
@@ -27,6 +30,7 @@ const LoginForm = () => {
 
   const onSubmit = async (user: UserTypeInputs) => {
     await dispatch(loginUser(user));
+    if (!loggedInUser.isAuthenticated) setLoginError(true);
   };
 
   const submitHandler = () => {
@@ -59,6 +63,11 @@ const LoginForm = () => {
 
   return (
     <View>
+      {loginError && (
+        <Text style={styles.errorText}>
+          <Text>Cannot login, please check you credentials</Text>
+        </Text>
+      )}
       {formIsInvalid && (
         <Text style={styles.errorText}>
           <Text>Invalid input values- please check your inputs</Text>
@@ -91,6 +100,9 @@ const LoginForm = () => {
       <Button style={styles.button} onPress={submitHandler} testID={'loginButton'}>
         {'Log In'}
       </Button>
+      <Text style={styles.signIn}>
+        Don't have an account yet? <Text style={styles.underline}>Sign in!</Text>
+      </Text>
     </View>
   );
 };
@@ -103,6 +115,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: GlobalStyles.colors.error500,
     margin: 8
+  },
+  signIn: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 12
+  },
+  underline: {
+    textDecorationLine: 'underline'
   }
 });
 

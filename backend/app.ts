@@ -8,7 +8,8 @@ import { User, Expense } from '@/models';
 
 const app = createServer();
 
-Expense.belongsTo(User, { constraints: true, onDelete: 'CASCADE', targetKey: 'id' });
+Expense.belongsTo(User, { onDelete: 'CASCADE', targetKey: 'id' });
+
 User.hasMany(Expense, { sourceKey: 'id' });
 
 sequelize
