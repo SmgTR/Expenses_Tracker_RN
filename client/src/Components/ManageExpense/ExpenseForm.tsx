@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Input from '@/Components/UI/Input';
 import { FC, useState } from 'react';
 import { Button } from '@/Components';
@@ -72,9 +72,10 @@ const ExpenseForm: FC<ExpensesFormType> = ({
         />
         <Input
           style={styles.rowInput}
-          label="Date"
+          label="Date YYYY-MM-DD"
           invalid={!inputValues.date.isValid}
           textInputConfig={{
+            keyboardType: 'decimal-pad',
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
             onChangeText: (value) => inputChangeHandler(value, 'date'),
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: GlobalStyles.colors.primary700,
     textAlign: 'center',
     marginVertical: 24
   },
@@ -135,7 +136,8 @@ const styles = StyleSheet.create({
   },
   button: {
     minWidth: 120,
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    color: GlobalStyles.colors.primary700
   },
   errorText: {
     textAlign: 'center',

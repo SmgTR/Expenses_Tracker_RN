@@ -12,7 +12,6 @@ import { GlobalStyles } from '@/Constants/styles';
 
 import LoginImg from '@/Assets/loginIcon.svg';
 import LoginForm from '@/Components/Auth/LoginForm';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const Login = () => {
   return (

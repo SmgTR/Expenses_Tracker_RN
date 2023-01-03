@@ -26,6 +26,8 @@ export const createExpense =
         headers: { Authorization: 'Bearer ' + user.token }
       })
       .then(({ data }) => {
+        data.newExpense.date = getFormattedDate(data.newExpense.date);
+
         dispatch(addExpense(data.newExpense));
       })
       .catch((err) => console.log(err));
